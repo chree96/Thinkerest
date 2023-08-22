@@ -1,128 +1,68 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the Redux TypeScript template
- * https://github.com/rahsheen/react-native-template-redux-typescript
- *
- * @format
- */
+import React, { useCallback } from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Home from './src/screens/home';
+import { createStackNavigator } from '@react-navigation/stack';
+import { colors } from './src/styles';
+import tabIcon from './src/utils/navigator/get-tab-icon';
+import { useSelector } from 'react-redux';
+import { selectContentColor } from './src/features/contents/contentsSlice';
+import Search from './src/screens/search/Search';
+import ContentDetail from './src/screens/content-detail';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+const Stack = createStackNavigator();
 
-import {
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import LearnReduxLinks from './src/components/LearnReduxLinks';
-import Header from './src/components/Header';
-import { Counter } from './src/features/counter/Counter';
-
-declare const global: { HermesInternal: null | {} };
-
-const App = () => {
+// Componente per la schermata Bottom Menu
+function BottomMenuScreen() {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <Counter />
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change
-                this screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More Redux</Text>
-              <Text style={styles.sectionDescription}>
-                Discover what to do next with Redux:
-              </Text>
-            </View>
-            <LearnReduxLinks />
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More React Native</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Bottom Menu Screen</Text>
+    </View>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+const Tab = createBottomTabNavigator();
 
-export default App;
+export default function App() {
+  const contentColor = useSelector(selectContentColor);
+
+  const HomeTabs = useCallback(() => {
+    return (
+      <Tab.Navigator
+        screenOptions={({ route /*, navigation*/ }) => ({
+          tabBarHideOnKeyboard: true,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => tabIcon(route, focused, contentColor),
+          tabBarStyle: {
+            backgroundColor: colors.solidBlack,
+            borderTopColor: 'transparent',
+          },
+          headerShown: false,
+        })}>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Search" component={Search} />
+        <Tab.Screen name="Notifications" component={BottomMenuScreen} />
+      </Tab.Navigator>
+    );
+  }, [contentColor]);
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="HomeTabs"
+          component={HomeTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ContentDetail"
+          component={ContentDetail}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Profile" component={BottomMenuScreen} />
+        <Stack.Screen name="Settings" component={BottomMenuScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
