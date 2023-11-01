@@ -1,9 +1,8 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ContentColor, ContentsState } from './contentsSlice.types';
 import { ContentType } from '../../types/content';
 import { RootState } from '../../app/store';
-import axios from 'axios';
-import { HttpAddress } from '../../services/http/HttpService';
+import { fetchSearchContent } from './contentActions';
 
 const initialState: ContentsState = {
   contentType: ContentType.general,
@@ -18,27 +17,6 @@ const initialState: ContentsState = {
   },
   isLoading: false,
 };
-
-export const fetchSearchContent = createAsyncThunk<
-  any,
-  undefined,
-  { state: { contents: ContentsState } }
->('contents/fetchSearchContent', async (prova: any, { getState }) => {
-  const { contentType } = getState()?.contents;
-
-  return axios
-    .get(HttpAddress + 'search-section-contents', {
-      params: { contentType },
-    })
-    .then(response => {
-      const results = response?.data?.results;
-      return results;
-    })
-    .catch(error => {
-      console.log('ERROR IN fetchSearchContent', error);
-      return '';
-    });
-});
 
 export const contentsSlice = createSlice({
   name: 'contents',

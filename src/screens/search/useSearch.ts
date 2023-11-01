@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  fetchSearchContent,
   selectContentColor,
   selectContentType,
   selectForegroundContentsByType,
@@ -14,6 +13,7 @@ import {
   ContentType,
 } from '../../types/content';
 import { useSearchContentQuery } from '../../features/api/apiSlice';
+import { fetchSearchContent } from '../../features/contents/contentActions';
 
 export const useSearch = (navigation: any) => {
   const dispatch = useAppDispatch();
