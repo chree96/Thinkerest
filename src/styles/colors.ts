@@ -71,7 +71,7 @@ const colors = {
   dessertWine: '#de5a00',
   disabled: '#dadada',
   ecstasy: '#F77222',
-  brightTurquoise: '#0fcbe9',
+  brightTurquoise: '#0DF5E3',
   jaffa: '#EF8B3F',
   earlsGreen: '#b5c532',
   pinkFlamingo: '#FF5EDE',

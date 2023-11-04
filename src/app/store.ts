@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import postsReducer from '../features/posts/postsSlice';
 import contentsReducer from '../features/contents/contentsSlice';
+import authReducer from '../features/auth/authSlice';
 import { apiSlice } from '../features/api/apiSlice';
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     counter: counterReducer,
     posts: postsReducer,
     contents: contentsReducer,
+    auth: authReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
