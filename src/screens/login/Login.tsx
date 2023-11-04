@@ -1,25 +1,43 @@
 import React, { memo } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import {
+  Text,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
+  Image,
+} from 'react-native';
 import { LoginProps } from './Login.types';
 import { styles } from './Login.styles';
 import ButtonPrimary from '../../components/atoms/button-primary';
 import { useLogin } from './useLogin';
 
 const Login = memo<LoginProps>(() => {
-  const { email, password, setEmail, setPassword, onLogin } = useLogin();
+  const { email, password, screenHeight, setEmail, setPassword, onLogin } =
+    useLogin();
 
   return (
-    <View style={styles.pageContainer}>
-      {/* LOGO */}
-      <View style={styles.logoContainer}></View>
-      {/* LOGIN INPUT */}
-      <View style={styles.loginContainer}>
-        <View style={styles.descriptionContainer}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}>
+      <KeyboardAvoidingView style={styles.loginContainer}>
+        {/* LOGO */}
+        <View style={[styles.logoContainer, { height: screenHeight * 0.34 }]}>
+          <Image
+            style={styles.logo}
+            resizeMode={'contain'}
+            source={require('../../../assets/images/login-image.png')}
+          />
+        </View>
+
+        {/* DESCRIPTION */}
+        <View>
           <Text style={styles.title}>Login</Text>
           <Text style={styles.description}>Please sign in to continue</Text>
         </View>
 
-        <View>
+        {/* INPUTS */}
+        <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             value={email}
@@ -33,12 +51,19 @@ const Login = memo<LoginProps>(() => {
             onChangeText={(value: string) => setPassword(value)}
           />
         </View>
-      </View>
-      {/* BUTTONS */}
-      <View>
-        <ButtonPrimary text={'LOGIN'} onPress={() => onLogin()} />
-      </View>
-    </View>
+
+        {/* BUTTONS */}
+        <View style={styles.btnContainer}>
+          <ButtonPrimary text={'LOGIN'} onPress={() => onLogin()} />
+          <ButtonPrimary
+            text={'REGISTER'}
+            style={styles.btnMargin}
+            isOutlineStyle
+            onPress={() => onLogin()}
+          />
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 });
 

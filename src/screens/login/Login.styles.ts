@@ -2,21 +2,24 @@ import { StyleSheet } from 'react-native';
 import { colors, families, sizes } from '../../styles';
 
 export const styles = StyleSheet.create({
-  pageContainer: {
-    flex: 1,
+  container: {
     backgroundColor: colors.solidBlack,
     paddingHorizontal: 16,
   },
-  logoContainer: {
-    flex: 0.4,
-    backgroundColor: 'red',
+  contentContainer: {
+    flexGrow: 1,
   },
   loginContainer: {
-    flex: 0.3,
-    backgroundColor: 'black',
+    flex: 1,
   },
-  descriptionContainer: {
-    backgroundColor: 'black',
+  logoContainer: {
+    backgroundColor: colors.solidWhite,
+    borderRadius: 10,
+    width: '100%',
+  },
+  logo: {
+    width: '100%',
+    height: '100%',
   },
   title: {
     fontFamily: families.bold,
@@ -30,16 +33,22 @@ export const styles = StyleSheet.create({
     marginTop: 8,
   },
   inputContainer: {
-    flex: 0.4,
-    backgroundColor: 'red',
+    height: 134,
+    paddingTop: 16,
+    justifyContent: 'space-between',
   },
   input: {
     height: 50,
     borderRadius: 8,
     width: '100%',
     backgroundColor: colors.darkGrey,
-    marginTop: 16,
     paddingHorizontal: 12,
     color: colors.lightGrey,
+  },
+  btnContainer: {
+    paddingTop: 24,
+  },
+  btnMargin: {
+    marginTop: 12,
   },
 });
