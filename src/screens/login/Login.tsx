@@ -11,10 +11,21 @@ import { LoginProps } from './Login.types';
 import { styles } from './Login.styles';
 import ButtonPrimary from '../../components/atoms/button-primary';
 import { useLogin } from './useLogin';
+import { colors } from '../../styles';
+import TextInputWithButton from '../../components/atoms/text-input-with-button';
 
-const Login = memo<LoginProps>(() => {
-  const { email, password, screenHeight, setEmail, setPassword, onLogin } =
-    useLogin();
+const Login = memo<LoginProps>(({ navigation }) => {
+  const {
+    username,
+    password,
+    screenHeight,
+    isPasswordHidden,
+    setUsername,
+    setPassword,
+    onTogglePasswordVisibility,
+    onLogin,
+    onRegister,
+  } = useLogin(navigation);
 
   return (
     <ScrollView
@@ -40,15 +51,23 @@ const Login = memo<LoginProps>(() => {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            value={email}
-            onChangeText={(value: string) => setEmail(value)}
-            placeholder="Email"
+            value={username}
+            onChangeText={(value: string) => setUsername(value)}
+            placeholder="Email or username"
           />
-          <TextInput
-            style={styles.input}
+
+          <TextInputWithButton
+            containerStyle={styles.pwdInputContainer}
+            inputStyle={[styles.input, styles.pwdInput]}
             value={password}
+            secureTextEntry={isPasswordHidden}
+            autoCapitalize={'none'}
             placeholder="Password"
             onChangeText={(value: string) => setPassword(value)}
+            buttonIconName={isPasswordHidden ? 'closedEye' : 'eye'}
+            onButtonPress={() => onTogglePasswordVisibility()}
+            buttonIconColor={colors.shadowLight}
+            buttonIconSize={18}
           />
         </View>
 
@@ -59,7 +78,7 @@ const Login = memo<LoginProps>(() => {
             text={'REGISTER'}
             style={styles.btnMargin}
             isOutlineStyle
-            onPress={() => onLogin()}
+            onPress={() => onRegister()}
           />
         </View>
       </KeyboardAvoidingView>

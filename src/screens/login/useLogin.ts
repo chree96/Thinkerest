@@ -3,29 +3,42 @@ import { loginUser } from '../../features/auth/authActions';
 import { LoginCredentials } from '../../features/auth/authSlice.types';
 import { useAppDispatch } from '../../app/hooks';
 import { useWindowDimensions } from 'react-native';
+import { Screen } from '../../constants/Screen';
 
-export const useLogin = () => {
+export const useLogin = (navigation: any) => {
   const dispatch = useAppDispatch();
   const { height: screenHeight } = useWindowDimensions();
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isPasswordHidden, setPasswordHidden] = useState(true);
+
+  const onTogglePasswordVisibility = useCallback(() => {
+    setPasswordHidden(!isPasswordHidden);
+  }, [isPasswordHidden]);
 
   const onLogin = useCallback(() => {
     const credentials: LoginCredentials = {
-      email,
+      username,
       password,
     };
 
     dispatch(loginUser(credentials));
-  }, [dispatch, email, password]);
+  }, [dispatch, username, password]);
+
+  const onRegister = () => {
+    navigation.navigate(Screen.Register);
+  };
 
   return {
-    email,
+    username,
     password,
     screenHeight,
-    setEmail,
+    isPasswordHidden,
+    setUsername,
     setPassword,
+    onTogglePasswordVisibility,
     onLogin,
+    onRegister,
   };
 };

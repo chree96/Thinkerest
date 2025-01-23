@@ -1,1 +1,3 @@
-export interface LoginProps {}
+export interface LoginProps {
+  navigation: any;
+}

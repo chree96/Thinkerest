@@ -38,12 +38,26 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   input: {
+    flex: undefined,
     height: 50,
     borderRadius: 8,
     width: '100%',
     backgroundColor: colors.darkGrey,
     paddingHorizontal: 12,
+    fontFamily: families.regular,
+    fontSize: sizes.small,
     color: colors.lightGrey,
+  },
+  pwdInput: {
+    paddingHorizontal: 0,
+    flex: 1,
+  },
+  pwdInputContainer: {
+    flex: undefined,
+    width: '100%',
+    height: 50,
+    backgroundColor: colors.darkGrey,
+    paddingRight: 0,
   },
   btnContainer: {
     paddingTop: 24,
