@@ -2,7 +2,7 @@ import React from 'react';
 import ImageCircleContainer from '../../components/atoms/image-circle-container';
 import { Cloud, HomeIcon, LensPlus, Timer } from '../../components/atoms/svg';
 import { colors } from '../../styles';
-import { Screen } from '../../types/screens';
+import { Screen } from '../../constants/Screen';
 
 export default function tabIcon(
   route: any,
