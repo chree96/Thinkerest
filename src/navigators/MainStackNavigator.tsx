@@ -42,7 +42,7 @@ export default function MainStackNavigator() {
         })}>
         <Tab.Screen name={Screen.Home} component={Home} />
         <Tab.Screen name={Screen.Search} component={Search} />
-        <Tab.Screen name="Notifications" component={PlaceholderScreen} />
+        <Tab.Screen name={Screen.Notifications} component={PlaceholderScreen} />
       </Tab.Navigator>
     );
   }, [contentColor]);
