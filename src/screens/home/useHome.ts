@@ -8,6 +8,7 @@ import {
 } from '../../features/contents/contentsSlice';
 import { ContentType } from '../../types/content';
 import { useAppSelector } from '../../app/hooks';
+import { Screen } from '../../constants/Screen';
 
 export const useHome = (navigation: any) => {
   const dispatch = useDispatch();
@@ -36,9 +37,9 @@ export const useHome = (navigation: any) => {
     [dispatch],
   );
 
-  const goToContentDetail = useCallback((contentId: string) => {
-    navigation.navigate('ContentDetail', { contentId });
-  }, []);
+  const goToContentDetail = (contentId: string) => {
+    navigation.navigate(Screen.ContentDetail, { contentId });
+  };
 
   return {
     homePosts,
