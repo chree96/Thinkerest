@@ -23,3 +23,5 @@ export { default as LensPlus } from './LensPlus';
 export { default as Close } from './Close';
 export { default as Dots } from './Dots';
 export { default as MoreTime } from './MoreTime';
+export { default as Eye } from './Eye';
+export { default as ClosedEye } from './ClosedEye';

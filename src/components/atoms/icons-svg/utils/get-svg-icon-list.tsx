@@ -3,9 +3,11 @@ import {
   ArrowBack,
   Book,
   Close,
+  ClosedEye,
   Cloud,
   ControlsIcon,
   Dots,
+  Eye,
   Gamepad,
   General,
   Hamburger,
@@ -59,5 +61,7 @@ export const getSvgIconList: any = (
     close: <Close fill={color} width={width || 30} />,
     dots: <Dots fill={color} width={width || 30} />,
     moreTime: <MoreTime fill={color} width={width || 30} />,
+    eye: <Eye fill={color} width={width || 30} />,
+    closedEye: <ClosedEye fill={color} width={width || 30} />,
   };
 };
