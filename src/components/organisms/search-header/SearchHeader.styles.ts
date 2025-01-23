@@ -20,22 +20,6 @@ export const styles = StyleSheet.create({
     marginTop: 18,
   },
   textInputContainer: {
-    flex: 1,
-    height: 42,
-    alignItems: 'center',
-    flexDirection: 'row',
     marginBottom: 12,
-    color: colors.shadowLight,
-    backgroundColor: colors.mineShaft,
-    borderRadius: 10,
-    paddingHorizontal: 12,
-  },
-  textInput: {
-    flex: 1,
-    color: colors.shadowLight,
-  },
-  inputStyle: {
-    marginTop: 5,
-    color: colors.shadowLight,
   },
 });

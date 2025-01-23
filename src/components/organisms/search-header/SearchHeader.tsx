@@ -1,16 +1,15 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
-import { Animated, TextInput, View } from 'react-native';
+import { Animated, View } from 'react-native';
 import { colors } from '../../../styles';
 import { styles } from './SearchHeader.styles';
 import HeaderContentButtons from '../../molecules/header-content-buttons';
-import { Lens } from '../../atoms/svg';
-import ButtonWithIcon from '../../atoms/button-with-icon';
 import { SearchHeaderProps } from './SearchHeader.types';
 import { ContentType } from '../../../types/content';
 import {
   getSearchHeaderAnimationStyles,
   startCollapse,
 } from '../../../utils/header/search-header-animation';
+import TextInputWithButton from '../../atoms/text-input-with-button';
 
 const SearchHeader = memo<SearchHeaderProps>(
   ({
@@ -46,7 +45,20 @@ const SearchHeader = memo<SearchHeaderProps>(
       <Animated.View
         style={[styles.headerContainer, transformHeaderCollapse, style]}>
         <View style={styles.searchContainer}>
-          <View style={styles.textInputContainer}>
+          <TextInputWithButton
+            iconName={'lens'}
+            iconColor={contentColor}
+            placeholder={'Cerca per titolo'}
+            placeholderTextColor={colors.shadowLight}
+            selectionColor={contentColor}
+            showSoftInputOnFocus={canSearch}
+            buttonIconName={'people'}
+            buttonIconColor={peopleIconColor}
+            containerStyle={styles.textInputContainer}
+            onChangeText={(value: string) => searchContent(value)}
+            onButtonPress={() => setIsPeopleSearch(!isPeopleSearch)}
+          />
+          {/* <View style={styles.textInputContainer}>
             <Lens width={22} fill={contentColor} />
             <TextInput
               placeholder="Cerca per titolo"
@@ -63,7 +75,7 @@ const SearchHeader = memo<SearchHeaderProps>(
               iconSize={30}
               noBackgroundColor
             />
-          </View>
+          </View> */}
         </View>
         <HeaderContentButtons
           contentType={contentType}
