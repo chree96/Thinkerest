@@ -1,5 +1,6 @@
 enum AuthScreen {
   Login = 'Login',
+  Register = 'Register',
 }
 
 enum MainScreen {
@@ -8,6 +9,7 @@ enum MainScreen {
   Profile = 'Profile',
   Settings = 'Settings',
   ContentDetail = 'ContentDetail',
+  Notifications = 'Notifications',
 }
 
 export const Screen = {
