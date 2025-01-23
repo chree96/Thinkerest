@@ -6,7 +6,7 @@ import {
   selectForegroundContentsByType,
   setContentType,
 } from '../../features/contents/contentsSlice';
-import { getGenreButtons, getSectionTitle } from './utils';
+import { getGenreButtons } from './utils';
 import {
   ContentGenre,
   ContentSearchSections,
@@ -27,6 +27,7 @@ export const useSearch = (navigation: any) => {
     string[]
   >([]);
 
+  // FARE REGISTRAZIONE COME QUA!!
   const { data, isError, isFetching } = useSearchContentQuery(searchedTitle);
 
   useEffect(() => {
@@ -75,15 +76,9 @@ export const useSearch = (navigation: any) => {
     [searchedContentPreview?.length],
   );
 
-  const goToContentDetail = useCallback((contentId: string) => {
+  const goToContentDetail = (contentId: string) => {
     navigation.navigate('ContentDetail', { contentId });
-  }, []);
-
-  const sectionTitle = useCallback(
-    (section: ContentSearchSections, genre?: ContentGenre) =>
-      getSectionTitle(section, genre),
-    [],
-  );
+  };
 
   const getContents = useCallback(
     (section: ContentSearchSections, genre?: ContentGenre) => {
@@ -120,7 +115,6 @@ export const useSearch = (navigation: any) => {
     contentType,
     contentColor,
     genreButtons,
-    sectionTitle,
     getContents,
     goToContentDetail,
     changeContentType,

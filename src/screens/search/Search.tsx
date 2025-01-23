@@ -14,6 +14,7 @@ import { SearchSectionContent } from '../../features/contents/contentsSlice.type
 import { useSearch } from './useSearch';
 import SearchHeader from '../../components/organisms/search-header';
 import { useHeaderScroll } from '../../hooks/useHeaderScroll';
+import { getSectionTitle } from './utils';
 // import AnimatedLoader from 'react-native-animated-loader';
 
 const Search = memo<SearchProps>(({ navigation }) => {
@@ -22,7 +23,6 @@ const Search = memo<SearchProps>(({ navigation }) => {
     contentType,
     contentColor,
     genreButtons,
-    sectionTitle,
     getContents,
     goToContentDetail,
     changeContentType,
@@ -54,12 +54,12 @@ const Search = memo<SearchProps>(({ navigation }) => {
   const renderContentSections = useCallback(
     () =>
       Object.keys(ContentSearchSections).map(section => {
-        let title = sectionTitle(section as ContentSearchSections);
+        let title = getSectionTitle(section as ContentSearchSections);
         let content = getContents(section as ContentSearchSections);
 
         if (section === ContentSearchSections.GENRE) {
           return Object.keys(ContentGenre).map(genre => {
-            title = sectionTitle(
+            title = getSectionTitle(
               section as ContentSearchSections,
               genre as ContentGenre,
             );
@@ -100,7 +100,7 @@ const Search = memo<SearchProps>(({ navigation }) => {
           </View>
         );
       }),
-    [sectionTitle, getContents, renderSingleContent],
+    [getContents, renderSingleContent],
   );
 
   return false ? (
