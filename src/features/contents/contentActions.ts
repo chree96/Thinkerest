@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ContentsState } from './contentsSlice.types';
 import axios from 'axios';
-import { HttpAddress } from '../../services/http/HttpService';
+import { HttpMockApiAddress } from '../../services/http/HttpService';
 
 export const fetchSearchContent = createAsyncThunk<
   any,
@@ -11,7 +11,7 @@ export const fetchSearchContent = createAsyncThunk<
   const { contentType } = getState()?.contents;
 
   return axios
-    .get(HttpAddress + 'search-section-contents', {
+    .get(HttpMockApiAddress + 'search-section-contents', {
       params: { contentType },
     })
     .then(response => {
