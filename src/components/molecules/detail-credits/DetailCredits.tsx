@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
-import { Image, Text, View, FlatList } from 'react-native';
+import { Image, Text, View, FlatList, ListRenderItemInfo } from 'react-native';
 import { styles } from './DetailCredits.styles';
 import { DetailCreditsProps } from './DetailCredits.types';
+import { CastInfo } from '../../../features/contents/contentsSlice.types';
 
 export default function DetailCredits({ credits, style }: DetailCreditsProps) {
   const renderCredits = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<CastInfo>) => (
       <View style={styles.creditContainer}>
         <View style={styles.imageContainer}>
           <Image
@@ -27,7 +28,7 @@ export default function DetailCredits({ credits, style }: DetailCreditsProps) {
   return (
     <View style={[styles.container, style]}>
       <Text style={styles.creditsTitle}>Credits</Text>
-      <FlatList
+      <FlatList<CastInfo>
         data={credits}
         keyExtractor={(item, index) => 'credits-' + index}
         renderItem={renderCredits}

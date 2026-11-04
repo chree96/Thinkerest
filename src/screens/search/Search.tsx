@@ -14,7 +14,6 @@ import { SearchSectionContent } from '../../features/contents/contentsSlice.type
 import { useSearch } from './useSearch';
 import SearchHeader from '../../components/organisms/search-header';
 import { useHeaderScroll } from '../../hooks/useHeaderScroll';
-// import AnimatedLoader from 'react-native-animated-loader';
 
 const Search = memo<SearchProps>(({ navigation }) => {
   const {
@@ -70,7 +69,8 @@ const Search = memo<SearchProps>(({ navigation }) => {
             return (
               <View
                 key={section + '-' + genre + '-section'}
-                style={styles.contentContainer}>
+                style={styles.contentContainer}
+              >
                 <HeaderText text={title} style={{ marginLeft: 8 }} />
                 <FlatList
                   data={content as SearchSectionContent[]}
@@ -105,13 +105,7 @@ const Search = memo<SearchProps>(({ navigation }) => {
 
   return false ? (
     <View style={[styles.pageContainer, globalStyle.loaderContainer]}>
-      {/* <AnimatedLoader
-          visible={true}
-          // overlayColor="rgba(255,255,255,0.75)"
-          source={require('../../../assets/animations/loader-bars-mono-color.json')}
-          animationStyle={globalStyle.lottieLoader}
-          speed={1}
-        /> */}
+      {/* INSERIRE LOADER */}
     </View>
   ) : (
     <View style={styles.pageContainer}>
@@ -146,7 +140,8 @@ const Search = memo<SearchProps>(({ navigation }) => {
           }}
           onScrollBeginDrag={event =>
             setScrollYOnScrollBeginDrag(event.nativeEvent.contentOffset.y)
-          }>
+          }
+        >
           {contentType !== ContentType.general ? (
             <View style={styles.pillButtonsContainer}>{genreButtons}</View>
           ) : null}

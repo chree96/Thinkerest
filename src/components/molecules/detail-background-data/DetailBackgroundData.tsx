@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Text, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from '../../atoms/linear-gradient/LinearGradient';
 import { styles } from './DetailBackgroundData.styles';
 import { getDetailHeaderActions } from './utils';
 import { DetailShareDataProps } from './DetailBackgroundData.types';

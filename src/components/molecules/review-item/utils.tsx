@@ -2,7 +2,7 @@ import React from 'react';
 import { colors } from '../../../styles';
 import ButtonWithIcon from '../../atoms/button-with-icon';
 
-const reviewActions: any = [
+const reviewActions: { action: string; icon: string; iconSize: number }[] = [
   { action: 'chat', icon: 'speechBubble', iconSize: 28 },
   { action: 'like', icon: 'cloud', iconSize: 20 },
   { action: 'more', icon: 'dots', iconSize: 20 },

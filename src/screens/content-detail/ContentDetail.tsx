@@ -4,7 +4,6 @@ import DetailBackgroundImage from '../../components/molecules/detail-background-
 import { styles } from './ContentDetail.styles';
 import DetailBackgroundData from '../../components/molecules/detail-background-data';
 import DetailBackgroundHeader from '../../components/molecules/detail-background-header';
-// import AnimatedLoader from 'react-native-animated-loader';
 import { globalStyle } from '../../styles';
 import DetailPlot from '../../components/molecules/detail-plot';
 import DetailRating from '../../components/molecules/detail-rating';
@@ -12,9 +11,10 @@ import DetailCredits from '../../components/molecules/detail-credits';
 import ReviewItem from '../../components/molecules/review-item';
 import ContentReviewsTabBar from '../../components/molecules/content-reviews-tab-bar';
 import getContentColor from '../../utils/content/get-content-color';
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from '../../components/atoms/linear-gradient/LinearGradient';
 import { ContentDetailProps } from './ContentDetail.types';
 import { useContentDetail } from './useContentDetail';
+import { ContentReview } from '../../features/contents/contentsSlice.types';
 
 const ContentDetail = memo<ContentDetailProps>(({ navigation }) => {
   const {
@@ -33,7 +33,7 @@ const ContentDetail = memo<ContentDetailProps>(({ navigation }) => {
   const { rating, contentType } = contentDetail || {};
 
   const renderReviews = useCallback(
-    (item, index) => (
+    (item: any, index: number) => (
       <ReviewItem
         key={reviewKeyExtractor(index)}
         user={item?.user}
@@ -49,8 +49,11 @@ const ContentDetail = memo<ContentDetailProps>(({ navigation }) => {
       reviewsData?.length ? (
         <View
           onStartShouldSetResponder={(): boolean => true}
-          style={styles.reviewContainer}>
-          {reviewsData?.map((item, index) => renderReviews(item, index))}
+          style={styles.reviewContainer}
+        >
+          {reviewsData?.map((item: ContentReview, index: number) =>
+            renderReviews(item, index),
+          )}
         </View>
       ) : null,
     [renderReviews, reviewsData],
@@ -84,12 +87,7 @@ const ContentDetail = memo<ContentDetailProps>(({ navigation }) => {
 
   return isFetchingContentDetail ? (
     <View style={[styles.container, globalStyle.loaderContainer]}>
-      {/* <AnimatedLoader
-          visible={true}
-          source={require('../../../assets/animations/loader-bars-mono-color.json')}
-          animationStyle={globalStyle.lottieLoader}
-          speed={1}
-        /> */}
+      {/* INSERIRE LOADER */}
     </View>
   ) : (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -101,12 +99,14 @@ const ContentDetail = memo<ContentDetailProps>(({ navigation }) => {
       <TouchableOpacity
         style={styles.infoTouchable}
         disabled={isInfoBtnVisible}
-        onPress={toggleVisibility}>
+        onPress={toggleVisibility}
+      >
         <View
           style={[
             styles.infoContainer,
             { maxHeight: isInfoBtnVisible ? undefined : 100 },
-          ]}>
+          ]}
+        >
           <Text style={styles.titleText}>{'Info'}</Text>
           <DetailPlot plot={contentDetail?.plot} />
           <DetailCredits credits={contentDetail?.credits} />

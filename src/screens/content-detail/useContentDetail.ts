@@ -66,7 +66,7 @@ export const useContentDetail = () => {
   }, [isInfoBtnVisible]);
 
   const reviewKeyExtractor = useCallback(
-    index => {
+    (index: number) => {
       const section =
         reviewsTabViewState === 0 ? 'friend-review-' : 'person-review-';
 

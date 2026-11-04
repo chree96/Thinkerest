@@ -26,7 +26,7 @@ export default function ButtonPrimary({
   onPressDisabled,
 }: ButtonPrimaryProps) {
   const btnStyle = useMemo(() => {
-    let outStyle: StyleProp<ViewStyle> = [
+    const outStyle: StyleProp<ViewStyle>[] = [
       styles.container,
       isOutlineStyle ? styles.outlineContainer : null,
     ];
@@ -53,7 +53,7 @@ export default function ButtonPrimary({
   }, [buttonColor, disabledStyle, iconName, isDisabled, isOutlineStyle, style]);
 
   const txtStyle = useMemo(() => {
-    let outStyle: StyleProp<TextStyle> = [
+    const outStyle: StyleProp<TextStyle>[] = [
       styles.text,
       isOutlineStyle ? styles.outlineText : null,
     ];
