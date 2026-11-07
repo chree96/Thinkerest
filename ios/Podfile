@@ -5,8 +5,8 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
  	 
-platform :ios, '12.4'	
-install! 'cocoapods', :deterministic_uuids => false	platform :ios, min_ios_version_supported
+platform :ios, min_ios_version_supported
+install! 'cocoapods', :deterministic_uuids => false
 prepare_react_native_project!
  
 linkage = ENV['USE_FRAMEWORKS']
