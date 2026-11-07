@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthState } from './authSlice.types';
-import { loginUser, refreshUserToken } from './authActions';
+import { loginUser, logoutUser, refreshUserToken } from './authActions';
 import { RootState } from '../../app/store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { removeItemValue } from '../../utils/remove-item-from-async-storage';
 
 const initialState: AuthState = {
   accessToken: null,
@@ -15,10 +13,9 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: state => {
+    clearAuth: state => {
       state.accessToken = null;
       state.user = null;
-      removeItemValue('refreshToken');
     },
   },
   extraReducers: builder => {
@@ -28,8 +25,6 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.isLoading = false;
 
-      const refreshToken = JSON.stringify(action.payload.refreshToken);
-      AsyncStorage.setItem('refreshToken', refreshToken);
     });
     builder.addCase(loginUser.pending, state => {
       state.isLoading = true;
@@ -50,12 +45,16 @@ export const authSlice = createSlice({
       state.user = null;
       state.accessToken = null;
       state.isLoading = false;
-      removeItemValue('refreshToken');
+    });
+    builder.addCase(logoutUser.fulfilled, state => {
+      state.accessToken = null;
+      state.user = null;
+      state.isLoading = false;
     });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { clearAuth } = authSlice.actions;
 
 export const selectIsLoggedIn = (state: RootState) =>
   state.auth.accessToken !== null;

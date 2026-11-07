@@ -1,44 +1,57 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginCredentials } from './authSlice.types';
 import axios from 'axios';
-import { HttpAddress } from '../../services/http/HttpService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthApiAddress } from '../../services/http/HttpService';
+import {
+  clearRefreshToken,
+  getRefreshToken,
+  saveRefreshToken,
+} from './secureTokenStorage';
+
+type AuthResponse = {
+  accessToken: string;
+  refreshToken?: string;
+  user: unknown;
+};
 
 export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials) => {
-    try {
-      const response = await axios.post(
-        'http://localhost:3001/auth/login',
-        // HttpAddress + 'auth/login',
-        credentials,
-      );
-      return response.data;
-    } catch (error) {
-      throw error;
+    const response = await axios.post<AuthResponse>(
+      `${AuthApiAddress}/auth/login`,
+      { username: credentials.email, password: credentials.password },
+    );
+    if (response.data.refreshToken) {
+      await saveRefreshToken(response.data.refreshToken);
     }
+    return response.data;
   },
 );
 
 export const refreshUserToken = createAsyncThunk(
   'auth/refresh',
-  async (payload, { rejectWithValue }) => {
-    const refreshToken = await AsyncStorage.getItem('refreshToken');
-    console.log({ refreshToken });
-
-    if (refreshToken) {
-      try {
-        const response = await axios.post(
-          'http://localhost:3001/auth/refresh',
-          // HttpAddress + 'auth/refresh',
-          { refreshToken: JSON.parse(refreshToken) },
-        );
-        return response.data;
-      } catch (error) {
-        throw error;
-      }
+  async (_, { rejectWithValue }) => {
+    const refreshToken = await getRefreshToken();
+    if (!refreshToken) {
+      return rejectWithValue('No refresh token found');
     }
 
-    return rejectWithValue('No refreshToken found');
+    try {
+      const response = await axios.post<AuthResponse>(
+        `${AuthApiAddress}/auth/refresh`,
+        { refreshToken },
+      );
+      if (response.data.refreshToken) {
+        await saveRefreshToken(response.data.refreshToken);
+      }
+      return response.data;
+    } catch (error) {
+      await clearRefreshToken();
+      throw error;
+    }
   },
 );
+
+export const logoutUser = createAsyncThunk('auth/logout', async () => {
+  await clearRefreshToken();
+});
